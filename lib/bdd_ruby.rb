@@ -1,4 +1,4 @@
-dir = File.dirname(__FILE__)
+require "bdd_ruby/version"
 require "bdd_ruby/BDD_WRAP"
 
 class BDD
