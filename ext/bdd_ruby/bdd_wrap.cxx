@@ -1838,6 +1838,7 @@ static VALUE mBDD_WRAP;
 #include <stdexcept>
 
 
+#include "bddc.h"
 #include "BDD.h"
 #include "ZBDD.h"
 
@@ -2001,6 +2002,22 @@ SWIG_AsVal_unsigned_SS_int (VALUE obj, unsigned int *val)
 }
 
 
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_char (VALUE obj, unsigned char *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UCHAR_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< unsigned char >(v);
+    }
+  }  
+  return res;
+}
+
+
 SWIGINTERN swig_type_info*
 SWIG_pchar_descriptor(void)
 {
@@ -2052,22 +2069,6 @@ SWIG_AsCharPtrAndSize(VALUE obj, char** cptr, size_t* psize, int *alloc)
 
 
 SWIGINTERN int
-SWIG_AsVal_unsigned_SS_char (VALUE obj, unsigned char *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UCHAR_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< unsigned char >(v);
-    }
-  }  
-  return res;
-}
-
-
-SWIGINTERN int
 SWIG_AsCharArray(VALUE obj, char *val, size_t size)
 { 
   char* cptr = 0; size_t csize = 0; int alloc = SWIG_OLDOBJ;
@@ -2109,6 +2110,1533 @@ SWIG_AsVal_char (VALUE obj, char *val)
   }
   return res;
 }
+
+SWIGINTERN VALUE
+_wrap_BDD_RecurLimit_get(VALUE self) {
+  VALUE _val;
+  
+  _val = SWIG_From_int(static_cast< int >(BDD_RecurLimit));
+  return _val;
+}
+
+
+SWIGINTERN VALUE
+_wrap_BDD_RecurCount_get(VALUE self) {
+  VALUE _val;
+  
+  _val = SWIG_From_int(static_cast< int >(BDD_RecurCount));
+  return _val;
+}
+
+
+SWIGINTERN VALUE
+_wrap_BDD_RecurCount_set(VALUE self, VALUE _val) {
+  {
+    int val;
+    int res = SWIG_AsVal_int(_val, &val);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""BDD_RecurCount""' of type '""int""'");
+    }
+    BDD_RecurCount = static_cast< int >(val);
+  }
+  return _val;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddinit(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddinit", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddinit", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (int)bddinit(arg1,arg2);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddnewvar(int argc, VALUE *argv, VALUE self) {
+  bddvar result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (bddvar)bddnewvar();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddnewvaroflev(int argc, VALUE *argv, VALUE self) {
+  bddvar arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddvar result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddvar","bddnewvaroflev", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddvar >(val1);
+  result = (bddvar)bddnewvaroflev(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddlevofvar(int argc, VALUE *argv, VALUE self) {
+  bddvar arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddvar result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddvar","bddlevofvar", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddvar >(val1);
+  result = (bddvar)bddlevofvar(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddvaroflev(int argc, VALUE *argv, VALUE self) {
+  bddvar arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddvar result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddvar","bddvaroflev", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddvar >(val1);
+  result = (bddvar)bddvaroflev(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddvarused(int argc, VALUE *argv, VALUE self) {
+  bddvar result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (bddvar)bddvarused();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddprime(int argc, VALUE *argv, VALUE self) {
+  bddvar arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddvar","bddprime", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddvar >(val1);
+  result = (bddp)bddprime(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddtop(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddvar result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddtop", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddvar)bddtop(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddcopy(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddcopy", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddcopy(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddnot(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddnot", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddnot(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddand(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddand", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddand", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddand(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddor(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddor", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddor", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddor(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddxor(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddxor", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddxor", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddxor(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddnand(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddnand", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddnand", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddnand(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddnor(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddnor", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddnor", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddnor(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddxnor(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddxnor", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddxnor", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddxnor(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddat0(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddat0", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddat0", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddat0(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddat1(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddat1", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddat1", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddat1(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddfree(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddfree", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  bddfree(arg1);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddused(int argc, VALUE *argv, VALUE self) {
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (bddp)bddused();
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddgc(int argc, VALUE *argv, VALUE self) {
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  result = (int)bddgc();
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddsize(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddsize", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddsize(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddvsize(int argc, VALUE *argv, VALUE self) {
+  bddp *arg1 = (bddp *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "bddp *","bddvsize", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< bddp * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","bddvsize", 2, argv[1] ));
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (bddp)bddvsize(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddexport(int argc, VALUE *argv, VALUE self) {
+  FILE *arg1 = (FILE *) 0 ;
+  bddp *arg2 = (bddp *) 0 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_FILE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "FILE *","bddexport", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< FILE * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "bddp *","bddexport", 2, argv[1] )); 
+  }
+  arg2 = reinterpret_cast< bddp * >(argp2);
+  ecode3 = SWIG_AsVal_int(argv[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "int","bddexport", 3, argv[2] ));
+  } 
+  arg3 = static_cast< int >(val3);
+  bddexport(arg1,arg2,arg3);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddimport(int argc, VALUE *argv, VALUE self) {
+  FILE *arg1 = (FILE *) 0 ;
+  bddp *arg2 = (bddp *) 0 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_FILE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "FILE *","bddimport", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< FILE * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "bddp *","bddimport", 2, argv[1] )); 
+  }
+  arg2 = reinterpret_cast< bddp * >(argp2);
+  ecode3 = SWIG_AsVal_int(argv[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "int","bddimport", 3, argv[2] ));
+  } 
+  arg3 = static_cast< int >(val3);
+  result = (int)bddimport(arg1,arg2,arg3);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bdddump(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bdddump", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  bdddump(arg1);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddvdump(int argc, VALUE *argv, VALUE self) {
+  bddp *arg1 = (bddp *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "bddp *","bddvdump", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< bddp * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","bddvdump", 2, argv[1] ));
+  } 
+  arg2 = static_cast< int >(val2);
+  bddvdump(arg1,arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddgraph(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddgraph", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  bddgraph(arg1);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddgraph0(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddgraph0", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  bddgraph0(arg1);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddvgraph(int argc, VALUE *argv, VALUE self) {
+  bddp *arg1 = (bddp *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "bddp *","bddvgraph", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< bddp * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","bddvgraph", 2, argv[1] ));
+  } 
+  arg2 = static_cast< int >(val2);
+  bddvgraph(arg1,arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddvgraph0(int argc, VALUE *argv, VALUE self) {
+  bddp *arg1 = (bddp *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "bddp *","bddvgraph0", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< bddp * >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","bddvgraph0", 2, argv[1] ));
+  } 
+  arg2 = static_cast< int >(val2);
+  bddvgraph0(arg1,arg2);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddlshift(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddlshift", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddlshift", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddlshift(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddrshift(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddrshift", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddrshift", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddrshift(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddsupport(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddsupport", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddsupport(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bdduniv(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bdduniv", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bdduniv", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bdduniv(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddexist(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddexist", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddexist", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddexist(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddcofactor(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddcofactor", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddcofactor", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddcofactor(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddimply(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddimply", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddimply", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (int)bddimply(arg1,arg2);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddrcache(int argc, VALUE *argv, VALUE self) {
+  unsigned char arg1 ;
+  bddp arg2 ;
+  bddp arg3 ;
+  unsigned char val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_char(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "unsigned char","bddrcache", 1, argv[0] ));
+  } 
+  arg1 = static_cast< unsigned char >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddrcache", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "bddp","bddrcache", 3, argv[2] ));
+  } 
+  arg3 = static_cast< bddp >(val3);
+  result = (bddp)bddrcache(arg1,arg2,arg3);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddwcache(int argc, VALUE *argv, VALUE self) {
+  unsigned char arg1 ;
+  bddp arg2 ;
+  bddp arg3 ;
+  bddp arg4 ;
+  unsigned char val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  unsigned int val3 ;
+  int ecode3 = 0 ;
+  unsigned int val4 ;
+  int ecode4 = 0 ;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_char(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "unsigned char","bddwcache", 1, argv[0] ));
+  } 
+  arg1 = static_cast< unsigned char >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddwcache", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "bddp","bddwcache", 3, argv[2] ));
+  } 
+  arg3 = static_cast< bddp >(val3);
+  ecode4 = SWIG_AsVal_unsigned_SS_int(argv[3], &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), Ruby_Format_TypeError( "", "bddp","bddwcache", 4, argv[3] ));
+  } 
+  arg4 = static_cast< bddp >(val4);
+  bddwcache(arg1,arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddoffset(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddoffset", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddoffset", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddoffset(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddonset(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddonset", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddonset", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddonset(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddonset0(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddonset0", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddonset0", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddonset0(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddchange(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddchange", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddchange", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddchange(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddintersec(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddintersec", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddintersec", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddintersec(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddunion(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddunion", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddunion", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddunion(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddsubtract(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddp arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddsubtract", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddp","bddsubtract", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddp >(val2);
+  result = (bddp)bddsubtract(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddcard(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddcard", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddcard(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddlit(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddlit", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddlit(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddlen(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddlen", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  result = (bddp)bddlen(arg1);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddimportz(int argc, VALUE *argv, VALUE self) {
+  FILE *arg1 = (FILE *) 0 ;
+  bddp *arg2 = (bddp *) 0 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 3) || (argc > 3)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_FILE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "FILE *","bddimportz", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< FILE * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "bddp *","bddimportz", 2, argv[1] )); 
+  }
+  arg2 = reinterpret_cast< bddp * >(argp2);
+  ecode3 = SWIG_AsVal_int(argv[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "int","bddimportz", 3, argv[2] ));
+  } 
+  arg3 = static_cast< int >(val3);
+  result = (int)bddimportz(arg1,arg2,arg3);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_bddpush(int argc, VALUE *argv, VALUE self) {
+  bddp arg1 ;
+  bddvar arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  bddp result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_unsigned_SS_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "bddp","bddpush", 1, argv[0] ));
+  } 
+  arg1 = static_cast< bddp >(val1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bddvar","bddpush", 2, argv[1] ));
+  } 
+  arg2 = static_cast< bddvar >(val2);
+  result = (bddp)bddpush(arg1,arg2);
+  vresult = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
 
 SWIGINTERN VALUE
 _wrap_BDD_MaxNode_get(VALUE self) {
@@ -2177,40 +3705,6 @@ _wrap_BDDV_MaxLenImport_get(VALUE self) {
   
   _val = SWIG_From_int(static_cast< int >(BDDV_MaxLenImport));
   return _val;
-}
-
-
-SWIGINTERN VALUE
-_wrap_BDD_RecurLimit_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_int(static_cast< int >(BDD_RecurLimit));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_wrap_BDD_RecurCount_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_int(static_cast< int >(BDD_RecurCount));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_wrap_BDD_RecurCount_set(VALUE self, VALUE _val) {
-  {
-    int val;
-    int res = SWIG_AsVal_int(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""BDD_RecurCount""' of type '""int""'");
-    }
-    BDD_RecurCount = static_cast< int >(val);
-  }
-  return _val;
-fail:
-  return Qnil;
 }
 
 
@@ -9811,7 +11305,7 @@ static swig_type_info _swigt__p_ZBDD = {"_p_ZBDD", "ZBDD *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ZBDDV = {"_p_ZBDDV", "ZBDDV *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ZBDD_Hash = {"_p_ZBDD_Hash", "ZBDD_Hash *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|bddword *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|bddword *|bddvar *|bddp *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_void = {"_p_void", "void *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
@@ -10107,6 +11601,76 @@ SWIGEXPORT void Init_BDD_WRAP(void) {
   }
   
   SWIG_RubyInitializeTrackings();
+  rb_define_const(mBDD_WRAP, "B_VAR_WIDTH", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(16U)));
+  rb_define_const(mBDD_WRAP, "B_VAR_MASK", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 16U) -1U))));
+  rb_define_const(mBDD_WRAP, "B_MSB_POS", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(31U)));
+  rb_define_const(mBDD_WRAP, "B_LSB_MASK", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(1U)));
+  rb_define_const(mBDD_WRAP, "B_MSB_MASK", SWIG_From_unsigned_SS_int(static_cast< unsigned int >((1U << 31U))));
+  rb_define_const(mBDD_WRAP, "B_INV_MASK", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(1U)));
+  rb_define_const(mBDD_WRAP, "B_CST_MASK", SWIG_From_unsigned_SS_int(static_cast< unsigned int >((1U << 31U))));
+  rb_define_const(mBDD_WRAP, "B_VAL_MASK", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 31U) -1U))));
+  rb_define_singleton_method(mBDD_WRAP, "BDD_RecurLimit", VALUEFUNC(_wrap_BDD_RecurLimit_get), 0);
+  rb_define_singleton_method(mBDD_WRAP, "BDD_RecurCount", VALUEFUNC(_wrap_BDD_RecurCount_get), 0);
+  rb_define_singleton_method(mBDD_WRAP, "BDD_RecurCount=", VALUEFUNC(_wrap_BDD_RecurCount_set), 1);
+  rb_define_const(mBDD_WRAP, "Bddvarmax", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 16U) -1U))));
+  rb_define_const(mBDD_WRAP, "Bddnull", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 31U) -1U))));
+  rb_define_const(mBDD_WRAP, "Bddfalse", SWIG_From_unsigned_SS_int(static_cast< unsigned int >((1U << 31U))));
+  rb_define_const(mBDD_WRAP, "Bddtrue", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 31U)^1U))));
+  rb_define_const(mBDD_WRAP, "Bddempty", SWIG_From_unsigned_SS_int(static_cast< unsigned int >((1U << 31U))));
+  rb_define_const(mBDD_WRAP, "Bddsingle", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 31U)^1U))));
+  rb_define_const(mBDD_WRAP, "Bddvalmax", SWIG_From_unsigned_SS_int(static_cast< unsigned int >(((1U << 31U) -1U))));
+  rb_define_module_function(mBDD_WRAP, "bddinit", VALUEFUNC(_wrap_bddinit), -1);
+  rb_define_module_function(mBDD_WRAP, "bddnewvar", VALUEFUNC(_wrap_bddnewvar), -1);
+  rb_define_module_function(mBDD_WRAP, "bddnewvaroflev", VALUEFUNC(_wrap_bddnewvaroflev), -1);
+  rb_define_module_function(mBDD_WRAP, "bddlevofvar", VALUEFUNC(_wrap_bddlevofvar), -1);
+  rb_define_module_function(mBDD_WRAP, "bddvaroflev", VALUEFUNC(_wrap_bddvaroflev), -1);
+  rb_define_module_function(mBDD_WRAP, "bddvarused", VALUEFUNC(_wrap_bddvarused), -1);
+  rb_define_module_function(mBDD_WRAP, "bddprime", VALUEFUNC(_wrap_bddprime), -1);
+  rb_define_module_function(mBDD_WRAP, "bddtop", VALUEFUNC(_wrap_bddtop), -1);
+  rb_define_module_function(mBDD_WRAP, "bddcopy", VALUEFUNC(_wrap_bddcopy), -1);
+  rb_define_module_function(mBDD_WRAP, "bddnot", VALUEFUNC(_wrap_bddnot), -1);
+  rb_define_module_function(mBDD_WRAP, "bddand", VALUEFUNC(_wrap_bddand), -1);
+  rb_define_module_function(mBDD_WRAP, "bddor", VALUEFUNC(_wrap_bddor), -1);
+  rb_define_module_function(mBDD_WRAP, "bddxor", VALUEFUNC(_wrap_bddxor), -1);
+  rb_define_module_function(mBDD_WRAP, "bddnand", VALUEFUNC(_wrap_bddnand), -1);
+  rb_define_module_function(mBDD_WRAP, "bddnor", VALUEFUNC(_wrap_bddnor), -1);
+  rb_define_module_function(mBDD_WRAP, "bddxnor", VALUEFUNC(_wrap_bddxnor), -1);
+  rb_define_module_function(mBDD_WRAP, "bddat0", VALUEFUNC(_wrap_bddat0), -1);
+  rb_define_module_function(mBDD_WRAP, "bddat1", VALUEFUNC(_wrap_bddat1), -1);
+  rb_define_module_function(mBDD_WRAP, "bddfree", VALUEFUNC(_wrap_bddfree), -1);
+  rb_define_module_function(mBDD_WRAP, "bddused", VALUEFUNC(_wrap_bddused), -1);
+  rb_define_module_function(mBDD_WRAP, "bddgc", VALUEFUNC(_wrap_bddgc), -1);
+  rb_define_module_function(mBDD_WRAP, "bddsize", VALUEFUNC(_wrap_bddsize), -1);
+  rb_define_module_function(mBDD_WRAP, "bddvsize", VALUEFUNC(_wrap_bddvsize), -1);
+  rb_define_module_function(mBDD_WRAP, "bddexport", VALUEFUNC(_wrap_bddexport), -1);
+  rb_define_module_function(mBDD_WRAP, "bddimport", VALUEFUNC(_wrap_bddimport), -1);
+  rb_define_module_function(mBDD_WRAP, "bdddump", VALUEFUNC(_wrap_bdddump), -1);
+  rb_define_module_function(mBDD_WRAP, "bddvdump", VALUEFUNC(_wrap_bddvdump), -1);
+  rb_define_module_function(mBDD_WRAP, "bddgraph", VALUEFUNC(_wrap_bddgraph), -1);
+  rb_define_module_function(mBDD_WRAP, "bddgraph0", VALUEFUNC(_wrap_bddgraph0), -1);
+  rb_define_module_function(mBDD_WRAP, "bddvgraph", VALUEFUNC(_wrap_bddvgraph), -1);
+  rb_define_module_function(mBDD_WRAP, "bddvgraph0", VALUEFUNC(_wrap_bddvgraph0), -1);
+  rb_define_module_function(mBDD_WRAP, "bddlshift", VALUEFUNC(_wrap_bddlshift), -1);
+  rb_define_module_function(mBDD_WRAP, "bddrshift", VALUEFUNC(_wrap_bddrshift), -1);
+  rb_define_module_function(mBDD_WRAP, "bddsupport", VALUEFUNC(_wrap_bddsupport), -1);
+  rb_define_module_function(mBDD_WRAP, "bdduniv", VALUEFUNC(_wrap_bdduniv), -1);
+  rb_define_module_function(mBDD_WRAP, "bddexist", VALUEFUNC(_wrap_bddexist), -1);
+  rb_define_module_function(mBDD_WRAP, "bddcofactor", VALUEFUNC(_wrap_bddcofactor), -1);
+  rb_define_module_function(mBDD_WRAP, "bddimply", VALUEFUNC(_wrap_bddimply), -1);
+  rb_define_module_function(mBDD_WRAP, "bddrcache", VALUEFUNC(_wrap_bddrcache), -1);
+  rb_define_module_function(mBDD_WRAP, "bddwcache", VALUEFUNC(_wrap_bddwcache), -1);
+  rb_define_module_function(mBDD_WRAP, "bddoffset", VALUEFUNC(_wrap_bddoffset), -1);
+  rb_define_module_function(mBDD_WRAP, "bddonset", VALUEFUNC(_wrap_bddonset), -1);
+  rb_define_module_function(mBDD_WRAP, "bddonset0", VALUEFUNC(_wrap_bddonset0), -1);
+  rb_define_module_function(mBDD_WRAP, "bddchange", VALUEFUNC(_wrap_bddchange), -1);
+  rb_define_module_function(mBDD_WRAP, "bddintersec", VALUEFUNC(_wrap_bddintersec), -1);
+  rb_define_module_function(mBDD_WRAP, "bddunion", VALUEFUNC(_wrap_bddunion), -1);
+  rb_define_module_function(mBDD_WRAP, "bddsubtract", VALUEFUNC(_wrap_bddsubtract), -1);
+  rb_define_module_function(mBDD_WRAP, "bddcard", VALUEFUNC(_wrap_bddcard), -1);
+  rb_define_module_function(mBDD_WRAP, "bddlit", VALUEFUNC(_wrap_bddlit), -1);
+  rb_define_module_function(mBDD_WRAP, "bddlen", VALUEFUNC(_wrap_bddlen), -1);
+  rb_define_module_function(mBDD_WRAP, "bddimportz", VALUEFUNC(_wrap_bddimportz), -1);
+  rb_define_module_function(mBDD_WRAP, "bddpush", VALUEFUNC(_wrap_bddpush), -1);
   rb_define_singleton_method(mBDD_WRAP, "BDD_MaxNode", VALUEFUNC(_wrap_BDD_MaxNode_get), 0);
   rb_define_singleton_method(mBDD_WRAP, "BDD_MaxVar", VALUEFUNC(_wrap_BDD_MaxVar_get), 0);
   rb_define_singleton_method(mBDD_WRAP, "BDDV_Active", VALUEFUNC(_wrap_BDDV_Active_get), 0);
@@ -10114,9 +11678,6 @@ SWIGEXPORT void Init_BDD_WRAP(void) {
   rb_define_singleton_method(mBDD_WRAP, "BDDV_SysVarTop", VALUEFUNC(_wrap_BDDV_SysVarTop_get), 0);
   rb_define_singleton_method(mBDD_WRAP, "BDDV_MaxLen", VALUEFUNC(_wrap_BDDV_MaxLen_get), 0);
   rb_define_singleton_method(mBDD_WRAP, "BDDV_MaxLenImport", VALUEFUNC(_wrap_BDDV_MaxLenImport_get), 0);
-  rb_define_singleton_method(mBDD_WRAP, "BDD_RecurLimit", VALUEFUNC(_wrap_BDD_RecurLimit_get), 0);
-  rb_define_singleton_method(mBDD_WRAP, "BDD_RecurCount", VALUEFUNC(_wrap_BDD_RecurCount_get), 0);
-  rb_define_singleton_method(mBDD_WRAP, "BDD_RecurCount=", VALUEFUNC(_wrap_BDD_RecurCount_set), 1);
   rb_define_module_function(mBDD_WRAP, "BDD_ID", VALUEFUNC(_wrap_BDD_ID), -1);
   
   SwigClassBDD.klass = rb_define_class_under(mBDD_WRAP, "BDD", rb_cObject);

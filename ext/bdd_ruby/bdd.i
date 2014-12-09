@@ -1,6 +1,7 @@
 %module "BDD_WRAP"
 
 %{
+#include "bddc.h"
 #include "BDD.h"
 #include "ZBDD.h"
 %}
@@ -107,6 +108,7 @@ bddword Count(BDD f, int tlev)
 %rename(equal_zbddv)           operator==(const ZBDDV& fv, const ZBDDV& gv);
 %rename(nequal_zbddv)          operator!=(const ZBDDV& fv, const ZBDDV& gv);
 
+%include "bddc.h"
 %include "BDD.h"
 %include "ZBDD.h"
 static bddword Count(BDD, int);
