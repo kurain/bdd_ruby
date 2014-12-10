@@ -1838,6 +1838,7 @@ static VALUE mBDD_WRAP;
 #include <stdexcept>
 
 
+#include <stdio.h>
 #include "bddc.h"
 #include "BDD.h"
 #include "ZBDD.h"
@@ -11294,6 +11295,68 @@ fail:
 }
 
 
+SWIGINTERN VALUE
+_wrap_fopen(int argc, VALUE *argv, VALUE self) {
+  char *arg1 = (char *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  FILE *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_AsCharPtrAndSize(argv[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "char const *","fopen", 1, argv[0] ));
+  }
+  arg1 = reinterpret_cast< char * >(buf1);
+  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *","fopen", 2, argv[1] ));
+  }
+  arg2 = reinterpret_cast< char * >(buf2);
+  result = (FILE *)fopen((char const *)arg1,(char const *)arg2);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_FILE, 0 |  0 );
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return vresult;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) delete[] buf1;
+  if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_fclose(int argc, VALUE *argv, VALUE self) {
+  FILE *arg1 = (FILE *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_FILE, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "FILE *","fclose", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< FILE * >(argp1);
+  result = (int)fclose(arg1);
+  vresult = SWIG_From_int(static_cast< int >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
@@ -11913,5 +11976,7 @@ SWIGEXPORT void Init_BDD_WRAP(void) {
   SwigClassZBDD_Hash.destroy = (void (*)(void *)) free_ZBDD_Hash;
   SwigClassZBDD_Hash.trackObjects = 0;
   rb_define_module_function(mBDD_WRAP, "Count", VALUEFUNC(_wrap_Count), -1);
+  rb_define_module_function(mBDD_WRAP, "fopen", VALUEFUNC(_wrap_fopen), -1);
+  rb_define_module_function(mBDD_WRAP, "fclose", VALUEFUNC(_wrap_fclose), -1);
 }
 

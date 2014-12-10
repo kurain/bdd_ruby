@@ -1,6 +1,7 @@
 %module "BDD_WRAP"
 
 %{
+#include <stdio.h>
 #include "bddc.h"
 #include "BDD.h"
 #include "ZBDD.h"
@@ -112,3 +113,5 @@ bddword Count(BDD f, int tlev)
 %include "BDD.h"
 %include "ZBDD.h"
 static bddword Count(BDD, int);
+FILE *fopen(const char *filename, const char *mode);
+int fclose(FILE *);
