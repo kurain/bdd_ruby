@@ -1,4 +1,8 @@
 require "bdd_ruby/BDD_WRAP"
+require "bdd_ruby/node_list"
+
+require "tempfile"
+require "Launchy"
 
 class ZDD
   class Node
@@ -38,6 +42,32 @@ class ZDD
       @manager._family(self.node, [], ret)
       ret
     end
+
+    def save(filename)
+      temp = Tempfile.new(['zdd-', '.zdd'])
+      fp = BDD_WRAP.fopen(temp.path,'w')
+      self.node.Export(fp)
+      BDD_WRAP.fclose(fp)
+
+      symbols = self.manager.id_table[1..self.node.Top].map{|s| s.to_s}
+
+      open(filename,'w') do |wio|
+        wio.write(symbols.join(' ') + "\n")
+        wio.write(temp.read)
+      end
+      temp.close
+    end
+
+    def show(filename=nil)
+      zdd_file = filename || Tempfile.new(['zdd-', '.zdd'])
+      self.save(zdd_file.path)
+
+      dot = NodeList.new(zdd_file).to_dot
+      dot.save(zdd_file.path, :svg)
+      Launchy.open(zdd_file.path + '.svg')
+      zdd_file.path + '.svg'
+    end
+
   end
 end
 
@@ -53,17 +83,18 @@ class ZDD
 end
 
 class ZDD
+  attr_accessor :id_table
   def initialize(init_size = 256, max_size = 2 ** 32 - 1)
     BDD_WRAP.BDD_Init(init_size, max_size)
     @name_table = {}
-    @id_table = {}
+    @id_table = [nil]
   end
 
   def literals(*names)
     names.map do |name|
       @name_table[name] ||= Proc.new{
         var_id = BDD_WRAP.BDD_NewVar
-        @id_table[var_id] = name
+        @id_table.push name
         Literal.new(var_id,name,self)
       }.call
     end

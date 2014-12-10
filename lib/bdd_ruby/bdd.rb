@@ -1,4 +1,9 @@
 require "bdd_ruby/BDD_WRAP"
+require "bdd_ruby/node_list"
+
+require "tempfile"
+require "Launchy"
+
 class BDD
   class Node
     attr_reader :node, :manager
@@ -58,6 +63,32 @@ class BDD
     def false?
       self.node.GetID == BDD_WRAP::Bddfalse
     end
+
+    def save(filename)
+      temp = Tempfile.new(['bdd-', '.bdd'])
+      fp = BDD_WRAP.fopen(temp.path,'w')
+      self.node.Export(fp)
+      BDD_WRAP.fclose(fp)
+
+      symbols = self.manager.id_table[1..self.node.Top].map{|s| s.to_s}
+
+      open(filename,'w') do |wio|
+        wio.write(symbols.join(' ') + "\n")
+        wio.write(temp.read)
+      end
+      temp.close
+    end
+
+    def show(filename=nil)
+      bdd_file = filename || Tempfile.new(['bdd-', '.bdd'])
+      self.save(bdd_file.path)
+
+      dot = NodeList.new(bdd_file).to_dot
+      dot.save(bdd_file.path, :svg)
+      Launchy.open(bdd_file.path + '.svg')
+      bdd_file.path + '.svg'
+    end
+
   end
 end
 
